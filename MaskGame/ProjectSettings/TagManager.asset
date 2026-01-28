@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mask
   - Duplicate Mask
+  - Mask Point
   layers:
   - Default
   - TransparentFX

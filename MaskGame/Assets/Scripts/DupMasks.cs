@@ -1,13 +1,10 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class DupMasks : MonoBehaviour
 {
     MasterMask MasterMaskScript;
-
-    string PickedEyes;
-    string PickedNose;
-    string PickedMouth;
 
     public TextMeshProUGUI EyesText;
     public TextMeshProUGUI NoseText;
@@ -23,5 +20,6 @@ public class DupMasks : MonoBehaviour
         EyesText.text = MasterMaskScript.PickedEyes;
         NoseText.text = MasterMaskScript.PickedNose;
         MouthText.text = MasterMaskScript.PickedMouth;
+        this.GetComponent<Image>().color = MasterMaskScript.PickedColour;
     }
 }
