@@ -1,12 +1,25 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour
 {
     MasterMask MasterMaskScript;
 
     int LevelCount = 1;
+    float Timer = 10;
+    int Score;
     public TextMeshProUGUI LevelText;
+    public TextMeshProUGUI TimerText;
+    public TextMeshProUGUI ScoreText;
+
+    string CauseOfGameOverString;
+    public TextMeshProUGUI CauseOfGameOverText;
+    public TextMeshProUGUI FinalLevelText;
+    public TextMeshProUGUI FinalScoreText;
+
+    public GameObject GameSpaceScreen;
+    public GameObject GameOverScreen;
 
     public GameObject[] B_Masks;
     public GameObject[] C_Masks;
@@ -17,13 +30,33 @@ public class GameplayManager : MonoBehaviour
     public GameObject[] C_Points;
     public GameObject[] D_Points;
 
-    void Start()
+    void OnEnable()
     {
         MasterMaskScript = GameObject.Find("Master Mask").GetComponent<MasterMask>();
+        
+        LevelCount = 1;
+        Timer = 10;
+        Score = 0;
+    }
+
+    void Update()
+    {
+        Timer = Timer - Time.deltaTime;
+        TimerText.text = "Timer: " + Mathf.RoundToInt(Timer * 100);
+
+        if (Timer <= 0)
+        {
+            CauseOfGameOverString = "ran out of Time.";
+            GameOver();
+        }
     }
 
     public void CorrectMask()
     {
+        Score = Score + Mathf.RoundToInt(Timer * 100);
+        ScoreText.text = "Score: " + Score;
+        Timer = 10;
+
         LevelCount++;
         LevelText.text = "Level: " + LevelCount;
 
@@ -77,5 +110,20 @@ public class GameplayManager : MonoBehaviour
         }
 
         MasterMaskScript.SetMasks();
+    }
+
+    public void WrongMask()
+    {
+        CauseOfGameOverString = "got the wrong mask.";
+        GameOver();
+    }
+
+    void GameOver()
+    {
+        FinalLevelText.text = "Level: " + LevelCount;
+        FinalScoreText.text = "Score: " + Score;
+        CauseOfGameOverText.text = "You " + CauseOfGameOverString;
+        GameOverScreen.SetActive(true);
+        GameSpaceScreen.SetActive(false);
     }
 }

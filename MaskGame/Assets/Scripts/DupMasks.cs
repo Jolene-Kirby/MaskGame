@@ -12,22 +12,18 @@ public class DupMasks : MonoBehaviour
     public TextMeshProUGUI NoseText;
     public TextMeshProUGUI MouthText;
 
-    void Start()
-    {
-        MasterMaskScript = GameObject.Find("Master Mask").GetComponent<MasterMask>();
-        GameplayManagerScript = GameObject.Find("Game Stats").GetComponent<GameplayManager>();
-    }
-
     void OnMouseOver()
     {
         if(Input.GetMouseButtonDown(0))
         {
+            GameplayManagerScript = GameObject.Find("Game Stats").GetComponent<GameplayManager>();
             GameplayManagerScript.CorrectMask();
         }
     }
     
     public void SetFeatures()
     {
+        MasterMaskScript = GameObject.Find("Master Mask").GetComponent<MasterMask>();
         EyesText.text = MasterMaskScript.PickedEyes;
         NoseText.text = MasterMaskScript.PickedNose;
         MouthText.text = MasterMaskScript.PickedMouth;
