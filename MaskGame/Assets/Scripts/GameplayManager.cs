@@ -22,6 +22,7 @@ public class GameplayManager : MonoBehaviour
     public GameObject GameSpaceScreen;
     public GameObject GameOverScreen;
 
+    public GameObject[] A_Masks;
     public GameObject[] B_Masks;
     public GameObject[] C_Masks;
     public GameObject[] D_Masks;
@@ -42,6 +43,28 @@ public class GameplayManager : MonoBehaviour
 
         LevelText.text = "Level: " + LevelCount;
         ScoreText.text = "Score: " + Score;
+
+        GameObject[] MaskArray = GameObject.FindGameObjectsWithTag("Mask");
+        foreach(GameObject mask in MaskArray)
+        {
+            mask.SetActive(false);
+        }
+        foreach(GameObject a_mask in A_Masks)
+        {
+            a_mask.SetActive(true);
+        }
+
+        GameObject[] PointArray = GameObject.FindGameObjectsWithTag("Mask Point");
+        foreach(GameObject point in PointArray)
+        {
+            point.SetActive(false);
+        }
+        foreach(GameObject a_point in A_Points)
+        {
+            a_point.SetActive(true);
+        }
+
+        MasterMaskScript.SetMasks();
     }
 
     void Update()

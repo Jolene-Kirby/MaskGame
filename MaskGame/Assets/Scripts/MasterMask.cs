@@ -18,11 +18,6 @@ public class MasterMask : MonoBehaviour
     public GameObject DuplicateMask1;
     public GameObject DuplicateMask2;
     public List<GameObject> MaskList;
-    
-    void OnEnable()
-    {
-        SetMasks();
-    }
 
     void Update()
     {

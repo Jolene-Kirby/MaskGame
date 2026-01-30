@@ -2011,6 +2011,11 @@ MonoBehaviour:
   FinalScoreText: {fileID: 1806798330}
   GameSpaceScreen: {fileID: 1116974509}
   GameOverScreen: {fileID: 1909379247}
+  A_Masks:
+  - {fileID: 117446904}
+  - {fileID: 1663627536}
+  - {fileID: 202859951}
+  - {fileID: 1559743253}
   B_Masks:
   - {fileID: 1529745887}
   - {fileID: 153792741}

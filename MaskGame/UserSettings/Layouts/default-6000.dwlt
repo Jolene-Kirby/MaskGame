@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Hierarchy
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -121,14 +121,14 @@ MonoBehaviour:
     y: 526
     width: 1387
     height: 407
-  m_MinSize: {x: 231, y: 276}
-  m_MaxSize: {x: 10001, y: 10026}
-  m_ActualView: {fileID: 14}
+  m_MinSize: {x: 101, y: 126}
+  m_MaxSize: {x: 4001, y: 4026}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 14}
   - {fileID: 18}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -650,7 +650,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Sprites
+    - Assets/Scripts
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -660,7 +660,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Sprites
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\orson\Desktop\Games\Projects\MaskGame\MaskGame
   m_LockTracker:
@@ -669,14 +669,13 @@ MonoBehaviour:
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs:
-    - m_Data: 47286
+    - m_Data: 47334
     m_LastClickedID:
-      m_Data: 47286
+      m_Data: 47334
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 47186
-    - m_Data: 47188
-    - m_Data: 47286
+    - m_Data: 47238
+    - m_Data: 47240
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -710,8 +709,8 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 47186
-    - m_Data: 47188
+    - m_Data: 47238
+    - m_Data: 47240
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -739,8 +738,8 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: -20670
-    m_LastClickedInstanceID: -20670
+    - m_Data: 53036
+    m_LastClickedInstanceID: 53036
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: []
     m_RenameOverlay:
@@ -863,33 +862,25 @@ MonoBehaviour:
     m_DynamicPanelBehavior: 0
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 657}
+      scrollPos: {x: 0, y: 0}
       m_SelectedIDs:
-      - m_Data: -20670
+      - m_Data: 59820
       m_LastClickedID:
-        m_Data: -20670
+        m_Data: 59820
       m_ExpandedIDs:
+      - m_Data: -13218
+      - m_Data: -12836
+      - m_Data: -12136
+      - m_Data: -3810
+      - m_Data: -3428
+      - m_Data: -2732
       - m_Data: -1338
-      - m_Data: 46026
-      - m_Data: 46050
-      - m_Data: 46086
-      - m_Data: 46126
-      - m_Data: 46328
-      - m_Data: 46340
-      - m_Data: 46376
-      - m_Data: 46420
-      - m_Data: 46510
-      - m_Data: 46522
-      - m_Data: 46582
-      - m_Data: 46594
-      - m_Data: 46670
-      - m_Data: 46758
-      - m_Data: 46870
-      - m_Data: 46890
+      - m_Data: 52838
+      - m_Data: 52886
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Mask 2a
-        m_OriginalName: Mask 2a
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
@@ -897,10 +888,10 @@ MonoBehaviour:
           width: 0
           height: 0
         m_UserData:
-          m_Data: 46670
+          m_Data: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 4
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 4}
