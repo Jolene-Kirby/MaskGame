@@ -27,7 +27,7 @@ public class Masks : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             GameplayManagerScript = GameObject.Find("Game Stats").GetComponent<GameplayManager>();
-            GameplayManagerScript.WrongMask();
+            GameplayManagerScript.IncorrectMaskStep1();
         }
     }
     
@@ -49,7 +49,7 @@ public class Masks : MonoBehaviour
             EyesSprite.sprite = PickedEyes;
             NoseSprite.sprite = PickedNose;
             MouthSprite.sprite = PickedMouth;
-            this.GetComponent<Image>().color = PickedColour;
+            GetComponent<Image>().color = PickedColour;
         }
     }
 }

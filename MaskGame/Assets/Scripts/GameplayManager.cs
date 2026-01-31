@@ -1,26 +1,38 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour
 {
     MasterMask MasterMaskScript;
 
-    int LevelCount = 1;
-    float Timer = 10;
-    float TimerTickRate = 1;
+    int LevelCount;
+    int HighestLevelReach;
+
+    float TotalTimeOnTimer;
+    float Timer;
+    bool TimerGoing;
+
     int Score;
+    int Highscore = -1;
+
     public TextMeshProUGUI LevelText;
     public TextMeshProUGUI TimerText;
     public TextMeshProUGUI ScoreText;
+    public Slider TimerBar;
 
     string CauseOfGameOverString;
     public TextMeshProUGUI CauseOfGameOverText;
     public TextMeshProUGUI FinalLevelText;
     public TextMeshProUGUI FinalScoreText;
+    public TextMeshProUGUI HighestLevelReachText;
+    public TextMeshProUGUI HighscoreText;
 
     public GameObject GameSpaceScreen;
     public GameObject GameOverScreen;
+    public GameObject TransitionScreen;
 
     public GameObject[] A_Masks;
     public GameObject[] B_Masks;
@@ -32,17 +44,26 @@ public class GameplayManager : MonoBehaviour
     public GameObject[] C_Points;
     public GameObject[] D_Points;
 
+    public int MaskAmountIncreaseLevel2;
+    public int MaskAmountIncreaseLevel3;
+    public int MaskAmountIncreaseLevel4;
+    public int TimerDescreaseStartLevel;
+    public int TimerDescreaseEndLevel;
+
     void OnEnable()
     {
         MasterMaskScript = GameObject.Find("Master Mask").GetComponent<MasterMask>();
         
         LevelCount = 1;
-        Timer = 10;
-        TimerTickRate = 1;
+
+        TotalTimeOnTimer = 15;
+        Timer = TotalTimeOnTimer;
+        TimerGoing = true;
+
         Score = 0;
 
         LevelText.text = "Level: " + LevelCount;
-        ScoreText.text = "Score: " + Score;
+        ScoreText.text = "Score: <BR>" + Score;
 
         GameObject[] MaskArray = GameObject.FindGameObjectsWithTag("Mask");
         foreach(GameObject mask in MaskArray)
@@ -69,8 +90,12 @@ public class GameplayManager : MonoBehaviour
 
     void Update()
     {
-        Timer = Timer - (Time.deltaTime * TimerTickRate);
-        TimerText.text = "Timer: " + Mathf.RoundToInt(Timer * 100);
+        if (TimerGoing == true)
+        {
+            Timer -= Time.deltaTime;
+            TimerText.text = "Timer: " + Mathf.RoundToInt(Timer * (1000/TotalTimeOnTimer));
+            TimerBar.value = Timer * (1000/TotalTimeOnTimer);
+        }
 
         if (Timer <= 0)
         {
@@ -79,16 +104,43 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    public void CorrectMask()
+    public void CorrectMaskStep1()
     {
-        Score = Score + Mathf.RoundToInt(Timer * 100);
-        ScoreText.text = "Score: " + Score;
-        Timer = 10;
+        Score += Mathf.RoundToInt(Timer * (1000/TotalTimeOnTimer));
+        ScoreText.text = "Score: <BR>" + Score;
+
+        GameObject[] MaskArray = GameObject.FindGameObjectsWithTag("Mask");
+        foreach(GameObject mask in MaskArray)
+        {
+            mask.GetComponent<BoxCollider2D>().enabled = false;
+        }
+
+        GameObject[] DuplicateMaskArray = GameObject.FindGameObjectsWithTag("Duplicate Mask");
+        foreach(GameObject duplicateMask in DuplicateMaskArray)
+        {
+            duplicateMask.GetComponent<BoxCollider2D>().enabled = false;
+        }
+
+        TimerGoing = false;
+
+        InvokeRepeating("CorrectMaskStep2", 1f, 0.01f);
+    }
+
+    void CorrectMaskStep2()
+    {
+        TransitionScreen.transform.position = Vector3.Lerp(TransitionScreen.transform.position, new Vector3(0, 0, 90), 0.1f);
+
+        Invoke("CorrectMaskStep3", 1f);
+    }
+
+    void CorrectMaskStep3()
+    {
+        CancelInvoke();
 
         LevelCount++;
         LevelText.text = "Level: " + LevelCount;
 
-        if (LevelCount == 6)
+        if (LevelCount == MaskAmountIncreaseLevel2)
         {
             foreach (GameObject b_mask in B_Masks)
             {
@@ -104,7 +156,7 @@ public class GameplayManager : MonoBehaviour
                 b_point.SetActive(true);
             }
         }
-        else if (LevelCount == 11)
+        else if (LevelCount == MaskAmountIncreaseLevel3)
         {
             foreach (GameObject c_mask in C_Masks)
             {
@@ -120,7 +172,7 @@ public class GameplayManager : MonoBehaviour
                 c_point.SetActive(true);
             }
         }
-        else if (LevelCount == 16)
+        else if (LevelCount == MaskAmountIncreaseLevel4)
         {
             foreach (GameObject d_mask in D_Masks)
             {
@@ -137,16 +189,42 @@ public class GameplayManager : MonoBehaviour
             }
         }
 
-        if(LevelCount >= 21)
+        if(LevelCount > TimerDescreaseStartLevel && LevelCount <= TimerDescreaseEndLevel)
         {
-            TimerTickRate = -(1 / Mathf.Sqrt(1 + (Mathf.Pow(LevelCount - 20, 2) / 100))) + 2;
+            TotalTimeOnTimer -= 1f/3f;
         }
-        Debug.Log(TimerTickRate);
+        Timer = TotalTimeOnTimer;
+        TimerGoing = true;
 
         MasterMaskScript.SetMasks();
+
+                GameObject[] MaskArray = GameObject.FindGameObjectsWithTag("Mask");
+        foreach(GameObject mask in MaskArray)
+        {
+            mask.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        
+        GameObject[] DuplicateMaskArray = GameObject.FindGameObjectsWithTag("Duplicate Mask");
+        foreach(GameObject duplicateMask in DuplicateMaskArray)
+        {
+            duplicateMask.GetComponent<BoxCollider2D>().enabled = true;
+        }
+
+        InvokeRepeating("CorrectMaskStep4", 0f, 0.01f);
+        Invoke("CorrectMaskStep5", 0.5f);
     }
 
-    public void WrongMask()
+    void CorrectMaskStep4()
+    {
+        TransitionScreen.transform.position = Vector3.Lerp(TransitionScreen.transform.position, new Vector3(0, -116, 90), 0.1f);
+    }
+
+    void CorrectMaskStep5()
+    {
+        CancelInvoke();
+    }
+
+    public void IncorrectMaskStep1()
     {
         CauseOfGameOverString = "got the wrong mask.";
         GameOver();
@@ -155,8 +233,27 @@ public class GameplayManager : MonoBehaviour
     void GameOver()
     {
         FinalLevelText.text = "Level: " + LevelCount;
+        FinalLevelText.color = Color.white;
+        if(LevelCount > HighestLevelReach)
+        {
+            FinalLevelText.text += " NEW HIGHEST LEVEL REACH!";
+            FinalLevelText.color = Color.yellow;
+            HighestLevelReach = LevelCount;
+        }
+        HighestLevelReachText.text = "Highest Level Reach: " + HighestLevelReach;
+
         FinalScoreText.text = "Score: " + Score;
+        FinalScoreText.color = Color.white;
+        if(Score > Highscore)
+        {
+            FinalScoreText.text += " NEW HIGHSCORE!";
+            FinalScoreText.color = Color.yellow;
+            Highscore = Score;
+        }
+        HighscoreText.text = "Highscore: " + Highscore;
+
         CauseOfGameOverText.text = "You " + CauseOfGameOverString;
+
         GameOverScreen.SetActive(true);
         GameSpaceScreen.SetActive(false);
     }

@@ -10,13 +10,11 @@ public class ButtonManager : MonoBehaviour
     {
         StartScreen.SetActive(false);
         GameSpaceScreen.SetActive(true);
-        Debug.Log("hi");
     }
 
     public void Restart()
     {
         GameSpaceScreen.SetActive(true);
         GameOverScreen.SetActive(false);
-        Debug.Log("bye");
     }
 }
